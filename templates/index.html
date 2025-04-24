@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Fraud Detection</title>
+    <style>
+        body {
+            background-color: #000;
+            color: #ffa500;
+            font-family: Arial, sans-serif;
+        }
+        .container {
+            max-width: 600px;
+            margin: 40px auto;
+            background-color: #111;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 0 20px rgba(255, 165, 0, 0.5);
+        }
+        h1 {
+            text-align: center;
+            color: #ffa500;
+            text-shadow: 2px 2px 5px #000;
+        }
+        label {
+            display: block;
+            margin: 15px 0 5px;
+        }
+        select, input[type="number"] {
+            width: 100%;
+            padding: 10px;
+            border-radius: 10px;
+            border: 1px solid #ffa500;
+            background-color: #222;
+            color: #ffa500;
+        }
+        button {
+            background-color: #ffa500;
+            color: #000;
+            padding: 12px;
+            border: none;
+            border-radius: 10px;
+            margin-top: 20px;
+            width: 100%;
+            font-weight: bold;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #ff8c00;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Fraud Detection Form</h1>
+        <form action="/predict" method="post">
+
+            <!-- Dropdowns -->
+            {% set options = ["Yes", "No"] %}
+            {% for field in [
+                'Multiple Login Attempts', 'Unusual IP Address', 'Previous Fraud History',
+                'Compromised Credentials Used', 'Malicious Link Clicked', 'Blacklisted Entity Involved',
+                'Dark Web Involvement', 'Unusual Location Detected', 'Social Engineering Involvement',
+                'Previous Suspicious Activity', 'Data Breach Exposure'
+            ] %}
+                <label for="{{ field }}">{{ field }}</label>
+                <select name="{{ field }}" required>
+                    {% for opt in options %}
+                        <option value="{{ opt }}">{{ opt }}</option>
+                    {% endfor %}
+                </select>
+            {% endfor %}
+
+            <!-- Special dropdowns -->
+            <label for="Fraud Type">Fraud Type</label>
+            <select name="Fraud Type" required>
+                <option>Phishing</option>
+                <option>Identity Theft</option>
+                <option>E-commerce Fraud</option>
+                <option>Honeypot Attack</option>
+                <option>Ransomware</option>
+            </select>
+
+            <label for="Transaction Time">Transaction Time</label>
+            <select name="Transaction Time" required>
+                <option>Day</option>
+                <option>Night</option>
+            </select>
+
+            <label for="Account Type">Account Type</label>
+            <select name="Account Type" required>
+                <option>Regular</option>
+                <option>Business</option>
+                <option>Premium</option>
+            </select>
+
+            <!-- Numeric inputs -->
+            {% for num in [
+                "Transaction Amount ($)", "Device Risk Score",
+                "Login Frequency (Per Day)", "Transaction Location Risk", "Account Age (Days)"
+            ] %}
+                <label for="{{ num }}">{{ num }}</label>
+                <input type="number" name="{{ num }}" step="any" required>
+            {% endfor %}
+
+            <button type="submit">Predict Fraud</button>
+        </form>
+    </div>
+</body>
+</html>
